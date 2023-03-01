@@ -1,15 +1,8 @@
-.libPaths(c(.libPaths(),"/home/lorenzo.calviello/R/x86_64-pc-linux-gnu-library/4.0/"))
-
 library(RiboseQC)
 library(INSPEcT)
 library(cowplot)
 library(corrplot)
 library(corrgram)
-
-
-setwd("/group/calviello/Lorenzo/DDX3_decay/To_Github/")
-
-
 
 
 source("data/new_riboseqc_all_HT.R")
