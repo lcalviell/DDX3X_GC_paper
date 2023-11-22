@@ -4,12 +4,11 @@ Here it is a collection of processed data and code to reproduce all figures in o
 
 Ziad Jowhar#, Albert Xu#, Srivats Venkataramanan, Mariah Hoye, Debra L Silver, Stephen N Floor* and Lorenzo Calviello*
 
-### biorXiv (2023) ### (link to appear soon)
+### biorXiv (2023) ### https://www.biorxiv.org/content/10.1101/2023.05.11.540322v1
 
 The "make_figures.R" script generates all figures in .pdf in the Figures/ folder, using data in the data/ folder
  
-The files belonging to the data/ folder are deposited in Zenodo: https://zenodo.org/record/7684026#.Y_8TDezMIUE 
-10.5281/zenodo.7684026
+The files belonging to the data/ folder are deposited in Zenodo: https://zenodo.org/records/10184843
 
 If you have any questions, please email:
 
