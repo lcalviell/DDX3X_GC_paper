@@ -5,20 +5,20 @@ library(corrplot)
 library(corrgram)
 source("data/new_riboseqc_all_HT.R")
 annotation_file<-"data/gencode.v32.annotation.gtf.gz_Rannot"
-load(annotation_file)
+GTF_annotation.h <- get(load(annotation_file))
 
 
 inspres<-readRDS("data/INSPEcT_res")
-gns<-GTF_annotation$trann$gene_name[match(rownames(inspres@ratePvals),GTF_annotation$trann$gene_id)]
-summary_multiDE<-get(load("data/degron_multiDE_results_summary.RData"))
+gns<-GTF_annotation.h$trann$gene_name[match(rownames(inspres@ratePvals),GTF_annotation.h$trann$gene_id)]
+summary_multiDE.h<-get(load("data/degron_multiDE_results_summary.RData"))
 
-gcqnt_orig<-summary_multiDE$uniq[[1]][,c("gene_id","gene_name","GCpct_cds")]
+gcqnt_orig<-summary_multiDE.h$uniq[[1]][,c("gene_id","gene_name","GCpct_cds")]
 
 
 trans <- function(x) -log(x, 10)
 inv <- function(x) 10^(-x)
 
-df<-summary_multiDE$uniq
+df<-summary_multiDE.h$uniq
 
 
 deg1<-viewModelRates(inspres,"synthesis")
@@ -554,7 +554,7 @@ dev.off()
 
 
 
-dfa<-scatterplot_RiboRNAIntronExon(summary_multiDE)[[2]]$data
+dfa<-scatterplot_RiboRNAIntronExon(summary_multiDE.h)[[2]]$data
 dfa<-dfa[!is.na(dfa$xy_RiboRNA),]
 dfa<-dfa[dfa$experiment=="48h_vs_DMSO",]
 dfa$xy_RiboRNA<-as.character(dfa$xy_RiboRNA)
@@ -585,10 +585,10 @@ dev.off()
 
 
 
-load("data/degron_multiDE_results_RFnew.RData")
+res_dfs.h <- get(load("data/degron_multiDE_results_RFnew.RData"))
 
 list_corplts<-list()
-rfone<-res_dfs
+rfone<-res_dfs.h
 nims<-names(rfone)
 nims<-nims[nims!="df_list"]
 for(j in nims){
@@ -959,12 +959,12 @@ load("data/new_rf_resoverview")
 load("data/new_multiDE_resoverview")
 
 
-rownames(enc_dfres[[1]])<-summary_multiDE$uniq[[1]]$gene_id
-rownames(enc_dfres[[2]])<-summary_multiDE$uniq[[1]]$gene_id
+rownames(enc_dfres[[1]])<-summary_multiDE.h$uniq[[1]]$gene_id
+rownames(enc_dfres[[2]])<-summary_multiDE.h$uniq[[1]]$gene_id
 
-ginon<-GTF_annotation$trann$gene_name[match(rownames(enc_dfres[[1]]),GTF_annotation$trann$gene_id)]
+ginon<-GTF_annotation.h$trann$gene_name[match(rownames(enc_dfres[[1]]),GTF_annotation.h$trann$gene_id)]
 
-ginon<-summary_multiDE[[1]][[1]]$gene_name
+ginon<-summary_multiDE.h[[1]][[1]]$gene_name
 
 arbipi<-sapply(strsplit(colnames(enc_dfres[[1]]),"_"),"[[",1)
 cell<-sapply(strsplit(colnames(enc_dfres[[1]]),"_"),"[[",2)
@@ -1130,7 +1130,7 @@ dev.off()
 aa<-data.frame(RNA_log2FC=enc_dfres$log2FC[,which(colnames(enc_dfres$log2FC)=="DDX3X_K562_shRNA_version1")])
 aa$RNA_padj<-enc_dfres$padj[,which(colnames(enc_dfres$log2FC)=="DDX3X_K562_shRNA_version1")]
 
-aa$GCpct_cds<-summary_multiDE$uniq[[1]]$GCpct_cds
+aa$GCpct_cds<-summary_multiDE.h$uniq[[1]]$GCpct_cds
 aa<-aa[complete.cases(aa),]
 
 
@@ -1412,7 +1412,7 @@ plotti<-maplot_multiDE(summary_multiDE = summary_multiDE_mouse,assayType = "RNA"
 
 load("data/rleall_stps.RData")
 
-ddx<-summary_multiDE$uniq$`48h`
+ddx<-summary_multiDE.h$uniq$`48h`
 ddx$tx_type_RiboRNA<-"mixed"
 ddx$tx_type_RiboRNA[ddx$RNA_padj<.01 & ddx$RNA_log2FC<0 & ddx$Ribo_log2FC<0]<-"Concordant_down"
 ddx$tx_type_RiboRNA[ddx$RNA_padj<.01 & ddx$RNA_log2FC>0 & ddx$Ribo_log2FC>0]<-"Concordant_up"
@@ -2135,7 +2135,7 @@ dev.off()
 
 
 annotation_file<-"data/gencode.v32.annotation.gtf.gz_Rannot"
-load(annotation_file)
+GTF_annotation.h <-get(load(annotation_file))
 
 
 load("data/enc_startcov")
@@ -3124,14 +3124,14 @@ annotation_file<-"data/gencode.v32.annotation.gtf.gz_Rannot"
 
 all_vars=T
 
-load(annotation_file)
+GTF_annotation.h <- get(load(annotation_file))
 
 inspres<-readRDS("data/INSPEcT_res")
-gns<-GTF_annotation$trann$gene_name[match(rownames(inspres@ratePvals),GTF_annotation$trann$gene_id)]
+gns<-GTF_annotation.h$trann$gene_name[match(rownames(inspres@ratePvals),GTF_annotation.h$trann$gene_id)]
 
-summary_multiDE<-get(load("data/degron_multiDE_results_summary.RData"))
+summary_multiDE.h<-get(load("data/degron_multiDE_results_summary.RData"))
 
-df<-summary_multiDE$uniq$`48h`
+df<-summary_multiDE.h$uniq$`48h`
 
 codop<-read.table("data/13059_2020_2251_MOESM6_ESM.csv",sep = ",",stringsAsFactors = F,header = T,skip=1)
 codop<-codop[codop$specie=="human",]
@@ -3228,12 +3228,12 @@ annotation_file<-"data/gencode.vM22.annotation.gtf_Rannot"
 
 all_vars=T
 
-load(annotation_file)
+GTF_annotation.m <- get(load(annotation_file))
 
 
-summary_multiDE<-get(load("data/mouseAllnoHet_multiDE_results_summary.RData"))
+summary_multiDE.m <-get(load("data/mouseAllnoHet_multiDE_results_summary.RData"))
 
-df<-summary_multiDE$uniq$cKO
+df<-summary_multiDE.m$uniq$cKO
 
 codop<-read.table("data/13059_2020_2251_MOESM6_ESM.csv",sep = ",",stringsAsFactors = F,header = T,skip=1)
 codop<-codop[codop$specie=="mouse",]
@@ -3526,7 +3526,7 @@ write.table(tibook,file = "Tables/Supplementary_Table_3.tsv",row.names = F,quote
 
 cv_folds=5
 all_vars=F
-summary_multiDE<-get(load("data/degron_multiDE_results_summary.RData"))
+summary_multiDE.h<-get(load("data/degron_multiDE_results_summary.RData"))
 
 godata<-get(load("data/degron_multiDE_results_summary_GO.RData"))
 goexample<-head(godata$`48h`$RiboRNA$TE_down$BP,10)
@@ -3839,12 +3839,12 @@ load("data/new_rf_resoverview")
 load("data/new_multiDE_resoverview")
 
 
-rownames(enc_dfres[[1]])<-summary_multiDE$uniq[[1]]$gene_id
-rownames(enc_dfres[[2]])<-summary_multiDE$uniq[[1]]$gene_id
+rownames(enc_dfres[[1]])<-summary_multiDE.h$uniq[[1]]$gene_id
+rownames(enc_dfres[[2]])<-summary_multiDE.h$uniq[[1]]$gene_id
 
-ginon<-GTF_annotation$trann$gene_name[match(rownames(enc_dfres[[1]]),GTF_annotation$trann$gene_id)]
+ginon<-GTF_annotation.h$trann$gene_name[match(rownames(enc_dfres[[1]]),GTF_annotation.h$trann$gene_id)]
 
-ginon<-summary_multiDE[[1]][[1]]$gene_name
+ginon<-summary_multiDE.h[[1]][[1]]$gene_name
 
 arbipi<-sapply(strsplit(colnames(enc_dfres[[1]]),"_"),"[[",1)
 cell<-sapply(strsplit(colnames(enc_dfres[[1]]),"_"),"[[",2)
@@ -4018,8 +4018,8 @@ icsh_min<-coverage(icsh_min,weight = icsh_min$score)
 icsh_pl<-coverage(icsh_pl,weight = icsh_pl$score)
 icsh<-icsh_min+icsh_pl
 
-regions<-make_counting_regions(GTF_annotation)
-dfok<-summary_multiDE$uniq$`48h`
+regions<-make_counting_regions(GTF_annotation.h)
+dfok<-summary_multiDE.h$uniq$`48h`
 okko<-which(dfok$TPM_RNA>1 & dfok$TPM_Ribo>1)
 if(length(okko)==0){okko<-which(dfok$TPM_RNA>5 | dfok$TPM_Ribo>5)}
 dfok<-dfok[okko,]
@@ -4190,7 +4190,7 @@ rbps_gc<-unique(dfgc$RBP[dfgc$importance>.03 & dfgc$corrp_tst>.5])
 go_package="org.Hs.eg.db"
 
 rbome<-read.table("data/RBP_Table_census_pfam.tsv",sep="\t",stringsAsFactors = F,header = T)
-allG <- rbome$V1
+allG <- rbome$gene.name
 myG <- rbps_gc
 mapp <- factor(as.integer(allG %in% myG))
 names(mapp) <- allG
@@ -4218,7 +4218,7 @@ load("data/degron_multiDE_results_RFnew.RData")
 
 
 
-rfone<-res_dfs
+rfone<-res_dfs.h
 
 
 
